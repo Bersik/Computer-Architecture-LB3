@@ -8,9 +8,9 @@ from spyne.decorator import srpc, rpc
 from spyne.service import ServiceBase
 from spyne.protocol.soap import Soap11
 
-from spyne.model.complex import Iterable, Array
-from spyne.model.primitive import UnsignedInteger, AnyXml, Int
-from spyne.model.primitive import String, Boolean
+from spyne.model.complex import Array
+from spyne.model.primitive import Int
+from spyne.model.primitive import Boolean
 from spyne.util.xml import *
 
 from spyne.server.wsgi import WsgiApplication
@@ -19,34 +19,29 @@ from wsgiref.simple_server import make_server
 
 
 class CampusService(ServiceBase):
-    @srpc(String, UnsignedInteger, _returns=Iterable(String))
-    def say_hello(name, times):
-        for i in xrange(times):
-            yield 'Hello, %s' % name
 
     @rpc(_returns=Boolean)
     def clear(self):
         return work_database.clear_database()
 
-    @srpc(Student, _returns=Int)
-    def add(student):
+    @rpc(Student, _returns=Int)
+    def add(self,student):
         return work_database.add(get_object_as_xml(student, Student, None, True))
-        # return get_xml_as_object(work_database.add(get_object_as_xml(student,Student,None,True)),Student)
 
     @rpc(_returns=Array(Student))
     def read_all(self):
         return work_database.read_all()
 
-    @srpc(Int, _returns=Student)
-    def read(idn):
+    @rpc(Int, _returns=Student)
+    def read(self,idn):
         return work_database.read(idn)
 
-    @srpc(Int, Student, _returns=Boolean)
-    def update(idn, student):
+    @rpc(Int, Student, _returns=Boolean)
+    def update(self,idn, student):
         return work_database.update(idn, get_object_as_xml(student, Student, None, True))
 
-    @srpc(Int, _returns=Boolean)
-    def remove(idn):
+    @rpc(Int, _returns=Boolean)
+    def remove(self,idn):
         return work_database.remove(idn)
 
 
@@ -74,8 +69,8 @@ class CampusSoapServer(object):
     @classmethod
     def stop(cls):
         if cls.server_:
-            cls._server.shutdown()
-            cls._server.server_close()
+            cls.server_.shutdown()
+            cls.server_.server_close()
 
 
 

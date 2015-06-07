@@ -1,6 +1,6 @@
 __author__ = 'Bersik'
 
-from suds.client import Client as ClientSOAP
+
 
 _programmer_translate_dict = {
     'name': str,
@@ -13,8 +13,10 @@ _programmer_translate_dict = {
 }
 
 
+
 def localhost_client():
-    return ClientSOAP('http://127.0.0.1:7789/?wsdl', cache=None)
+    from suds.client import Client
+    return Client('http://127.0.0.1:7789/?wsdl', cache=None)
 
 
 def student_as_dict(student):
@@ -44,7 +46,7 @@ class Client():
         return None
 
     def read(self, id):
-        student = self.client.service.read(id)
+        student = self.client.service.read(str(id))
         return student
 
     def update(self, id, student):
@@ -56,4 +58,8 @@ class Client():
         return resp
 
     def clear(self):
-        resp = self.client.service.clear()
+        return self.client.service.clear()
+
+    def create_student(self,name="", surname="", age=0, group="", hostel=0, room=0):
+        return {"name": name, "surname": surname, "age": age, "group": group, "hostel": hostel, "room": room}
+

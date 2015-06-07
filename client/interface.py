@@ -1,8 +1,8 @@
-from string import lower
-
 __author__ = 'Bersik'
 
+from string import lower
 from client import Client
+import client as client_
 
 client = Client()
 
@@ -76,9 +76,6 @@ def read_int_field_update(name_field, b_value):
         print "Error! Please repeat."
 
 
-def create_student(name="", surname="", age=0, group="", hostel=0, room=0):
-    return {"name": name, "surname": surname, "age": age, "group": group, "hostel": hostel, "room": room}
-
 
 def read_student():
     print "Enter the field of student:"
@@ -88,7 +85,7 @@ def read_student():
     group = read_text_field("Group")
     hostel = read_int_field("Hostel")
     room = read_int_field("Room")
-    return create_student(name, surname, age, group, hostel, room)
+    return client.create_student(name, surname, age, group, hostel, room)
 
 
 def read_id():
@@ -150,7 +147,7 @@ def edit():
         group = read_text_field_update("Group", student.group)
         hostel = read_int_field_update("Hostel", student.hostel)
         room = read_int_field_update("Room", student.room)
-        student = create_student(name, surname, age, group, hostel, room)
+        student = client.create_student(name, surname, age, group, hostel, room)
         client.update(idn, student)
         print "Changed!"
     else:
@@ -167,8 +164,8 @@ def remove():
 def clear():
     yn = raw_input("You seriously? (y/N)\n")
     if lower(yn) == "y":
-        client.clear()
-        print "Cleared!"
+        if client.clear():
+            print "Cleared!"
 
 
 if __name__ == '__main__':

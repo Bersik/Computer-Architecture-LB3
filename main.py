@@ -1,8 +1,7 @@
-import multiprocessing
-import signal
-
 __author__ = 'Bersik'
 
+import multiprocessing
+import signal
 from service.service import CampusSoapServer
 
 soap_thread = multiprocessing.Process(target=CampusSoapServer.start)

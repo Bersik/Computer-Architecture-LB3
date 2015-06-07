@@ -1,19 +1,14 @@
-from spyne.util.xml import get_xml_as_object
-
 __author__ = 'Bersik'
 
+from spyne.util.xml import get_xml_as_object
 from lxml import etree
 from dbxml import *
 from model import Student
 import os
 
-collection_name = "service/db.dbxml"
-
-
-def create_database():
-    if not (os.path.exists(collection_name) and os.path.isfile(collection_name)):
-        mgr = XmlManager()
-        mgr.createContainer(collection_name)
+#global collection_name
+#collection_name = "service/db2.dbxml"
+collection_name = "db.dbxml"
 
 
 def check_database(function):
@@ -21,6 +16,11 @@ def check_database(function):
         create_database()
     return function
 
+
+def create_database():
+    if not (os.path.exists(collection_name) and os.path.isfile(collection_name)):
+        mgr = XmlManager()
+        mgr.createContainer(collection_name)
 
 @check_database
 def inc_id():
