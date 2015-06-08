@@ -2,12 +2,12 @@ __author__ = 'Bersik'
 
 from string import lower
 from client import Client
-import client as client_
 
-client = Client()
-
+global client_
 
 def menu():
+    global client_
+    client_ = Client()
     while True:
         print "Menu:"
         print "1. Add student"
@@ -85,7 +85,7 @@ def read_student():
     group = read_text_field("Group")
     hostel = read_int_field("Hostel")
     room = read_int_field("Room")
-    return client.create_student(name, surname, age, group, hostel, room)
+    return client_.create_student(name, surname, age, group, hostel, room)
 
 
 def read_id():
@@ -111,7 +111,7 @@ def print_students(students):
 
 
 def add():
-    idn = client.add(read_student())
+    idn = client_.add(read_student())
     if idn:
         print "Added! id=%d" % idn
     else:
@@ -119,7 +119,7 @@ def add():
 
 
 def read():
-    student = client.read(read_id())
+    student = client_.read(read_id())
     if student:
         print_title()
         print_student(student)
@@ -128,7 +128,7 @@ def read():
 
 
 def read_all():
-    students = client.read_all()
+    students = client_.read_all()
     if students:
         print_title()
         print_students(students)
@@ -138,7 +138,7 @@ def read_all():
 
 def edit():
     idn = read_id()
-    student = client.read(idn)
+    student = client_.read(idn)
     if student:
         print "Enter the new field of student:"
         name = read_text_field_update("Name", student.name)
@@ -147,15 +147,15 @@ def edit():
         group = read_text_field_update("Group", student.group)
         hostel = read_int_field_update("Hostel", student.hostel)
         room = read_int_field_update("Room", student.room)
-        student = client.create_student(name, surname, age, group, hostel, room)
-        client.update(idn, student)
+        student = client_.create_student(name, surname, age, group, hostel, room)
+        client_.update(idn, student)
         print "Changed!"
     else:
         print "Edit error!"
 
 
 def remove():
-    if client.remove(read_id()):
+    if client_.remove(read_id()):
         print "Deleted!"
     else:
         print "Delete error!"
@@ -164,7 +164,7 @@ def remove():
 def clear():
     yn = raw_input("You seriously? (y/N)\n")
     if lower(yn) == "y":
-        if client.clear():
+        if client_.clear():
             print "Cleared!"
 
 

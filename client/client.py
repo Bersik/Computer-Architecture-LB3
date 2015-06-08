@@ -16,7 +16,7 @@ _programmer_translate_dict = {
 
 def localhost_client():
     from suds.client import Client
-    return Client('http://127.0.0.1:7789/?wsdl', cache=None)
+    return Client('http://127.0.0.1:7790/?wsdl', cache=None)
 
 
 def student_as_dict(student):
@@ -30,7 +30,7 @@ def student_as_dict(student):
 
 
 class Client():
-    def __init__(self):
+    def __init__(self,):
         self.client = localhost_client()
 
     def add(self, student):
@@ -60,6 +60,7 @@ class Client():
     def clear(self):
         return self.client.service.clear()
 
+    @classmethod
     def create_student(self,name="", surname="", age=0, group="", hostel=0, room=0):
         return {"name": name, "surname": surname, "age": age, "group": group, "hostel": hostel, "room": room}
 

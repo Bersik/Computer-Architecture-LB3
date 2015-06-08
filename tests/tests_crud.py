@@ -66,3 +66,6 @@ class SoapIntegrationTest(unittest.TestCase):  # Alive database is required
         self.assertEquals(self.client.remove(2),True)
         students = self.client.read_all()
         self.assertEquals(len(students), 2)
+
+if __name__ == '__main__':
+    unittest.main()

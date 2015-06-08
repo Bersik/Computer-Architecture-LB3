@@ -49,7 +49,7 @@ class CampusSoapServer(object):
     server_ = None
 
     @classmethod
-    def start(cls, port=7789):
+    def start(cls, port=7790):
         app = Application([CampusService], 'campus',
                           in_protocol=Soap11(validator='lxml'),
                           out_protocol=Soap11(),
